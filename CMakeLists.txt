@@ -496,10 +496,10 @@ if(MSVC)
     COMPILE_FLAGS "/D ZMQ_STATIC"
     OUTPUT_NAME "libzmq")
 else()
-    if(EMBEDDED)
-        add_library(libzmq STATIC ${sources} ${public_headers} ${html-docs} ${readme-docs} ${zmq-pkgconfig})
-    else()
+    if(BUILD_SHARED_LIBS)
         add_library(libzmq SHARED ${sources} ${public_headers} ${html-docs} ${readme-docs} ${zmq-pkgconfig})
+    else()
+        add_library(libzmq STATIC ${sources} ${public_headers} ${html-docs} ${readme-docs} ${zmq-pkgconfig})
     endif()
     if(ZMQ_BUILD_FRAMEWORK)
       set_target_properties(libzmq PROPERTIES
