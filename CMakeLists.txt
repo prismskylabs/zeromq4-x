@@ -27,7 +27,9 @@ set(ZMQ_CMAKE_MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/builds/cmake/Modules)
 list(APPEND CMAKE_MODULE_PATH ${ZMQ_CMAKE_MODULES_DIR})
 
 include(TestZMQVersion)
-include(ZMQSourceRunChecks)
+if(NOT S2X_PLATFORM)
+    include(ZMQSourceRunChecks)
+endif()
 include(CheckIncludeFiles)
 include(CheckLibraryExists)
 include(CheckFunctionExists)
@@ -156,13 +158,14 @@ endif()
 
 
 #-----------------------------------------------------------------------------
-zmq_check_sock_cloexec()
-zmq_check_so_keepalive()
-zmq_check_tcp_keepcnt()
-zmq_check_tcp_keepidle()
-zmq_check_tcp_keepintvl()
-zmq_check_tcp_keepalive()
-
+if(NOT S2X_PLATFORM)
+    zmq_check_sock_cloexec()
+    zmq_check_so_keepalive()
+    zmq_check_tcp_keepcnt()
+    zmq_check_tcp_keepidle()
+    zmq_check_tcp_keepintvl()
+    zmq_check_tcp_keepalive()
+endif()
 
 if(    CMAKE_SYSTEM_NAME MATCHES "Linux"
     OR CMAKE_SYSTEM_NAME MATCHES "GNU/kFreeBSD"
@@ -185,8 +188,8 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
 endif()
 
 set(CMAKE_PYTHON_VERSION 2.7 2.6 2.5 2.4)
-find_package(PythonInterp)
-find_package(AsciiDoc)
+#find_package(PythonInterp)
+#find_package(AsciiDoc)
 
 cmake_dependent_option(WITH_DOC "Build Reference Guide documentation(requires DocBook)" ON
                        "PYTHON_FOUND;ASCIIDOC_FOUND" OFF)
