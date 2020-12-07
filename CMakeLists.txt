@@ -27,7 +27,7 @@ set(ZMQ_CMAKE_MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/builds/cmake/Modules)
 list(APPEND CMAKE_MODULE_PATH ${ZMQ_CMAKE_MODULES_DIR})
 
 include(TestZMQVersion)
-if(NOT S2X_PLATFORM)
+if(NOT (S2X_PLATFORM OR AXIS))
     include(ZMQSourceRunChecks)
 endif()
 include(CheckIncludeFiles)
@@ -158,7 +158,7 @@ endif()
 
 
 #-----------------------------------------------------------------------------
-if(NOT S2X_PLATFORM)
+if(NOT (S2X_PLATFORM OR AXIS))
     zmq_check_sock_cloexec()
     zmq_check_so_keepalive()
     zmq_check_tcp_keepcnt()
